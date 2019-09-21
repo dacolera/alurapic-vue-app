@@ -11,6 +11,11 @@
             :url="foto.url"
             :titulo="foto.titulo"
           />
+          <router-link :to="{ name: 'altera', params : { id : foto._id}}">
+            <botao
+              rotulo="Alterar"
+              tipo="button"/>
+          </router-link>
           <botao
             tipo="button"
             rotulo="REMOVER"

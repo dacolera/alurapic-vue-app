@@ -17,7 +17,14 @@ export const routes =[
     menu : true
   },
   {
+    path : '/cadastro/:id',
+    name : 'altera',
+    component : Cadastro,
+    menu : false
+  },
+  {
     path : '*',
-    component : Home
+    component : Home,
+    menu : false
   }
 ];
