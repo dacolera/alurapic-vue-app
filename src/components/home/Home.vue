@@ -16,7 +16,7 @@
             rotulo="REMOVER"
             @activeButton="remove(foto)"
             :confirmacao="true"
-            estilo="padrao"
+            estilo="perigo"
           />
         </meu-painel>
       </li>
@@ -25,6 +25,7 @@
 </template>
 
 <script>
+    import FotoService from "../../domain/foto/FotoService";
     import Painel from '../shared/painel/Painel';
     import ImagemResponsiva from "../shared/imagem-responsiva/ImagemResponsiva";
     import Botao from '../shared/botao/Botao.vue';
@@ -56,7 +57,8 @@
 
         methods : {
             remove(foto) {
-                this.$http.delete(`v1/fotos/${foto._id}`)
+                this.service
+                    .apaga(foto._id)
                     .then(() => {
                         let indice = this.fotos.indexOf(foto);
                         this.fotos.splice(indice,1);
@@ -69,8 +71,10 @@
         },
 
         created() {
-            this.$http.get('v1/fotos')
-                .then(res => res.json())
+
+            this.service = new FotoService(this.$resource);
+            this.service
+                .lista()
                 .then(fotos => this.fotos = fotos);
         }
     }

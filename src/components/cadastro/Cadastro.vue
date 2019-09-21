@@ -30,6 +30,7 @@
 </template>
 
 <script>
+  import FotoService from "../../domain/foto/FotoService";
     import ImagemResponsiva from '../shared/imagem-responsiva/ImagemResponsiva.vue'
     import Botao from '../shared/botao/Botao.vue';
     import Foto from '../../domain/foto/Foto.js';
@@ -48,9 +49,14 @@
             }
         },
 
+        created() {
+          this.service = new  FotoService(this.$resource);
+        },
+
         methods : {
             grava() {
-                this.$http.post('v1/fotos', this.foto)
+                this.service
+                    .grava(this.foto)
                     .then(() => this.foto = new Foto, err => console.log(err));
 
             }
