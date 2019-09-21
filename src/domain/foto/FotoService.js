@@ -9,7 +9,19 @@ export default class FotoService {
       .then(res => res.json());
   }
 
+  busca(id) {
+    return this._resource
+      .get({ id })
+      .then(res => res.json());
+  }
+
   grava(foto) {
+
+    if (foto._id) {
+      return this._resource
+        .update({ id : foto._id}, foto);
+    }
+
     return this._resource
       .save(foto);
   }
