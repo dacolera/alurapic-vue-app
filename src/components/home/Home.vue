@@ -13,7 +13,7 @@
           />
           <router-link :to="{ name: 'altera', params : { id : foto._id}}">
             <botao
-              rotulo="Alterar"
+              rotulo="ALTERAR"
               tipo="button"/>
           </router-link>
           <botao
@@ -68,11 +68,7 @@
                         let indice = this.fotos.indexOf(foto);
                         this.fotos.splice(indice, 1);
                         this.mensagem = 'Foto removida com sucesso'
-                    }, err => {
-                            console.log(err);
-                            this.mensagem = 'Nao foi possivel remover a foto';
-                        }
-                    )
+                    }, err => this.mensagem = err.message);
             }
         },
 
@@ -81,7 +77,10 @@
             this.service = new FotoService(this.$resource);
             this.service
                 .lista()
-                .then(fotos => this.fotos = fotos);
+                .then(fotos => this.fotos = fotos, err => {
+                    console.log(err);
+                    this.mensagem = err.message
+                });
         }
     }
 </script>

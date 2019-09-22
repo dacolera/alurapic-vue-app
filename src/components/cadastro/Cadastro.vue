@@ -2,7 +2,7 @@
   <div>
     <h1 class="centralizado">Cadastro</h1>
     <h2 class="centralizado"></h2>
-
+    <p v-show="mensagem" class="centralizado">{{ mensagem }}</p>
     <form @submit.prevent="grava()">
       <div class="controle">
         <label for="titulo">TÍTULO</label>
@@ -46,7 +46,8 @@
         data() {
             return {
                 foto : new Foto,
-                id : this.$route.params.id
+                id : this.$route.params.id,
+                mensagem : ''
             }
         },
 
@@ -55,7 +56,7 @@
 
           if (this.id) {
               this.service.busca(this.id)
-                  .then(foto => this.foto = foto)
+                  .then(foto => this.foto = foto, err => this.mensagem = err.message)
           }
         },
 
@@ -68,7 +69,7 @@
                             this.$router.push({name: 'home'});
                         }
                         this.foto = new Foto
-                    }, err => console.log(err));
+                    }, err => this.mensagem = err.message);
 
             }
         }
